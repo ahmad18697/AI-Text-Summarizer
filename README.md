@@ -13,3 +13,6 @@ A full-stack application that uses Hugging Face's BART model to summarize text.
    ```bash
    cd backend && npm install
    cd ../frontend && npm install
+
+# Local development
+ - contributer are always welcome
