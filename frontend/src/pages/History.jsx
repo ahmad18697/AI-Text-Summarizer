@@ -32,6 +32,7 @@ import {
 } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
 import { motion } from 'framer-motion';
+import BACKEND_URL from '../../config';
 
 // Custom relative time formatter using Intl
 const formatRelativeTime = (dateString) => {
@@ -105,7 +106,7 @@ export default function History() {
     const fetchHistory = async () => {
       try {
         setLoading(true);
-        const res = await axios.get('http://localhost:5000/api/history');
+        const res = await axios.get(`${BACKEND_URL}/api/history`);
         setSummaries(res.data);
         setFilteredSummaries(res.data);
         setLoading(false);
@@ -136,7 +137,7 @@ export default function History() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/history/${id}`);
+      await axios.delete(`${BACKEND_URL}/api/history/${id}`);
       setSummaries(prev => prev.filter(item => item._id !== id));
     } catch (error) {
       console.error('Failed to delete summary:', error);
@@ -145,7 +146,7 @@ export default function History() {
 
   const handleRefresh = () => {
     setLoading(true);
-    axios.get('http://localhost:5000/api/history')
+    axios.get(`${BACKEND_URL}/api/history`)
       .then(res => {
         setSummaries(res.data);
         setLoading(false);
