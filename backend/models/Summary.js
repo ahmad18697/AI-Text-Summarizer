@@ -1,9 +1,8 @@
 const mongoose = require('mongoose');
 
-const summarySchema = new mongoose.Schema({
-  text: { type: String, required: true },
-  summary: { type: String, required: true },
-  createdAt: { type: Date, default: Date.now }
-});
+const SummarySchema = new mongoose.Schema({
+  text: String,
+  summary: String,
+}, { timestamps: true });
 
-module.exports = mongoose.model('Summary', summarySchema);
+module.exports = mongoose.model('Summary', SummarySchema);

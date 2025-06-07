@@ -6,15 +6,11 @@ const summaryRoutes = require('./routes/summaryRoutes');
 const historyRoutes = require('./routes/historyRoutes');
 
 const app = express();
+connectDB();
 
-// Middleware
 app.use(cors());
 app.use(express.json());
 
-// Database Connection
-connectDB();
-
-// Routes
 app.use('/api/summarize', summaryRoutes);
 app.use('/api/history', historyRoutes);
 
