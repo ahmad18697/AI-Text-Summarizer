@@ -10,6 +10,7 @@ import {
   CircularProgress
 } from '@mui/material'
 import axios from 'axios'
+import BACKEND_URL from '../../config'
 
 export default function Summarizer() {
   const [text, setText] = useState('')
@@ -21,7 +22,7 @@ export default function Summarizer() {
     if (!text.trim()) return
     setLoading(true)
     try {
-      const res = await axios.post('http://localhost:5000/api/summarize', { text })
+      const res = await axios.post(`${BACKEND_URL}/api/summarize`, { text })
       setSummary(res.data.summary.summary)
     } catch (error) {
       alert('Failed to generate summary')
