@@ -1,0 +1,55 @@
+# Node modules
+node_modules/
+
+# Build outputs
+dist/
+build/
+
+# Environment variables
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# Editor folders/files
+.vscode/
+.idea/
+.DS_Store
+*.swp
+
+# System files
+Thumbs.db
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Coverage reports
+coverage/
+
+# Optional: Vite cache
+.vite/
+
+# Optional: If using Next.js or similar
+.next/
+out/
+
+# Optional: Backend (Python/FastAPI/Django) virtual environments
+venv/
+__pycache__/
+
+# Optional: If using local databases
+*.sqlite3
+*.db
+mongodb-data/
+
+# Optional: If using uploads or media
+uploads/
+media/

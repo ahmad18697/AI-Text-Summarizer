@@ -1,0 +1,17 @@
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './App'
+import './index.css'
+import axios from 'axios'
+import { AuthProvider } from './context/AuthContext'
+
+axios.defaults.baseURL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000'
+axios.defaults.withCredentials = true
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <AuthProvider>
+      <App />
+    </AuthProvider>
+  </React.StrictMode>
+)
