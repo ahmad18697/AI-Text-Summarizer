@@ -35,5 +35,7 @@ app.use('/auth', authRoutes);
 app.use('/api/summary', summaryRoutes);
 app.use('/api/history', historyRoutes);
 
+app.get('/health', (req, res) => res.json({ status: 'ok' }));
+
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
