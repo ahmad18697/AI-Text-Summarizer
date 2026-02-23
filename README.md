@@ -1,19 +1,19 @@
 # AI Text Summarizer
 
-Full‑stack web app that summarizes text using the Google Gemini API, with authentication, user history, and a modern UI.
+A modern, premium SaaS web application that summarizes text using the Google Gemini API. Built with a stunning, responsive UI featuring glassmorphism, smooth animations, and secure authentication.
 
-- Frontend: React + Vite, TailwindCSS, Material UI
-- Backend: Node.js, Express, MongoDB (Mongoose)
-- Auth: JWT via HTTP‑only cookie, Email/Password and Google OAuth
-- Dev servers: Frontend http://localhost:5173, Backend http://localhost:8000
+- **Frontend**: React + Vite, TailwindCSS, Framer Motion, Material UI
+- **Backend**: Node.js, Express, MongoDB (Mongoose)
+- **Auth**: JWT via HTTP‑only cookie, Email/Password and Google OAuth
+- **Dev servers**: Frontend http://localhost:5173, Backend http://localhost:8000
 
 ## Features
-- AI summarization of long text through `/api/summary`
-- Secure authentication (register, login, Google login, logout)
-- Protected routes for summarizer, history, and profile
-- History of generated summaries
-- Responsive UI with MUI + Tailwind
-- Optional background image for auth pages: `frontend/public/auth-bg.png`
+- **Advanced AI Summarization**: Instantly summarize long text and articles using Google Gemini.
+- **Premium SaaS UI**: Beautiful, engaging interface with glassmorphism, subtle micro-animations, and dynamic feedback.
+- **Secure Authentication**: Full support for Email/Password registration and Google OAuth login.
+- **Protected User Dashboard**: Secure routes for the summarizer, history, and user profile.
+- **History Tracking**: Automatically save and manage a complete history of generated summaries.
+- **Fully Responsive**: Optimized experience across desktop, tablet, and mobile devices.
 
 ## Repository Structure
 
