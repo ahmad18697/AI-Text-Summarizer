@@ -50,7 +50,7 @@ export default function Login() {
   }, []);
 
   useEffect(() => {
-    const url = `${import.meta.env.BASE_URL}auth-bg.png`;
+    const url = '/login-bg.png';
     const body = document.body;
     const prev = {
       image: body.style.backgroundImage,
@@ -75,7 +75,7 @@ export default function Login() {
 
   return (
     <Box sx={{ position: 'relative', minHeight: '100vh', width: '100%' }}>
-      <Box sx={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundImage: `url(${import.meta.env.BASE_URL}auth-bg.png)`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', zIndex: 0 }} />
+      <Box sx={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundImage: `url('/login-bg.png')`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', zIndex: 0 }} />
       <Box sx={{ position: 'relative', zIndex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', width: '100%' }}>
         <Card sx={{ width: 380, borderRadius: 3, bgcolor: '#ffffff', border: '1px solid rgba(0,0,0,0.06)', boxShadow: '0 10px 30px rgba(79,70,229,0.12)' }}>
           <CardContent>
