@@ -18,9 +18,11 @@ export function AuthProvider({ children }) {
   const logout = async () => {
     try {
       await api.post('/auth/logout');
-      setUser(null);
     } catch (e) {
       // ignore
+    } finally {
+      localStorage.removeItem('token');
+      setUser(null);
     }
   };
 

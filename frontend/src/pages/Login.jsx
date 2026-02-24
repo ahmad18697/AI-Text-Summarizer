@@ -16,6 +16,7 @@ export default function Login() {
     setLoading(true);
     try {
       const res = await api.post('/auth/login', { email, password });
+      if (res.data.token) localStorage.setItem('token', res.data.token);
       setUser(res.data.user);
       navigate('/');
     } catch (err) {
@@ -28,6 +29,7 @@ export default function Login() {
   const handleGoogleResponse = async (response) => {
     try {
       const res = await api.post('/auth/google', { id_token: response.credential });
+      if (res.data.token) localStorage.setItem('token', res.data.token);
       setUser(res.data.user);
       navigate('/');
     } catch (e) {

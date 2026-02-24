@@ -19,6 +19,8 @@ function issueToken(req, res, user) {
     sameSite: isSecure ? 'none' : 'lax',
     maxAge: 7 * 24 * 60 * 60 * 1000,
   });
+
+  return token;
 }
 
 exports.register = async (req, res) => {
@@ -32,8 +34,8 @@ exports.register = async (req, res) => {
     const hash = await bcrypt.hash(password, 10);
     const user = await User.create({ name, email, password: hash });
 
-    issueToken(req, res, user);
-    res.status(201).json({ user: { id: user._id, name: user.name, email: user.email, avatar: user.avatar } });
+    const token = issueToken(req, res, user);
+    res.status(201).json({ token, user: { id: user._id, name: user.name, email: user.email, avatar: user.avatar } });
   } catch (err) {
     res.status(500).json({ error: 'Registration failed' });
   }
@@ -48,8 +50,8 @@ exports.login = async (req, res) => {
     const match = await bcrypt.compare(password, user.password);
     if (!match) return res.status(400).json({ error: 'Invalid credentials' });
 
-    issueToken(req, res, user);
-    res.json({ user: { id: user._id, name: user.name, email: user.email, avatar: user.avatar } });
+    const token = issueToken(req, res, user);
+    res.json({ token, user: { id: user._id, name: user.name, email: user.email, avatar: user.avatar } });
   } catch (err) {
     res.status(500).json({ error: 'Login failed' });
   }
@@ -83,8 +85,8 @@ exports.google = async (req, res) => {
       }
     }
 
-    issueToken(req, res, user);
-    res.json({ user: { id: user._id, name: user.name, email: user.email, avatar: user.avatar } });
+    const token = issueToken(req, res, user);
+    res.json({ token, user: { id: user._id, name: user.name, email: user.email, avatar: user.avatar } });
   } catch (err) {
     res.status(401).json({ error: 'Google authentication failed' });
   }
