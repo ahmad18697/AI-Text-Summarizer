@@ -5,12 +5,18 @@ const User = require('../models/User');
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
-function issueToken(res, user) {
+function issueToken(req, res, user) {
   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
+
+  // Localhost (http://) cannot process Secure=true with SameSite=None correctly in some browsers.
+  // Render / Vercel (https://) REQUIRE Secure=true with SameSite=None.
+  // We check if the request came through HTTPS (which Render forwards via trusted proxy).
+  const isSecure = req.secure || req.headers['x-forwarded-proto'] === 'https' || process.env.NODE_ENV === 'production';
+
   res.cookie('token', token, {
     httpOnly: true,
-    secure: true, // true required for cross-origin over HTTPS, works on localhost too
-    sameSite: 'none', // required for cross-origin (Vercel -> Render)
+    secure: isSecure,
+    sameSite: isSecure ? 'none' : 'lax',
     maxAge: 7 * 24 * 60 * 60 * 1000,
   });
 }
@@ -26,7 +32,7 @@ exports.register = async (req, res) => {
     const hash = await bcrypt.hash(password, 10);
     const user = await User.create({ name, email, password: hash });
 
-    issueToken(res, user);
+    issueToken(req, res, user);
     res.status(201).json({ user: { id: user._id, name: user.name, email: user.email, avatar: user.avatar } });
   } catch (err) {
     res.status(500).json({ error: 'Registration failed' });
@@ -42,7 +48,7 @@ exports.login = async (req, res) => {
     const match = await bcrypt.compare(password, user.password);
     if (!match) return res.status(400).json({ error: 'Invalid credentials' });
 
-    issueToken(res, user);
+    issueToken(req, res, user);
     res.json({ user: { id: user._id, name: user.name, email: user.email, avatar: user.avatar } });
   } catch (err) {
     res.status(500).json({ error: 'Login failed' });
@@ -77,7 +83,7 @@ exports.google = async (req, res) => {
       }
     }
 
-    issueToken(res, user);
+    issueToken(req, res, user);
     res.json({ user: { id: user._id, name: user.name, email: user.email, avatar: user.avatar } });
   } catch (err) {
     res.status(401).json({ error: 'Google authentication failed' });
@@ -86,10 +92,14 @@ exports.google = async (req, res) => {
 
 exports.me = async (req, res) => {
   try {
+    if (!req.user || !req.user.id) {
+      return res.status(401).json({ error: 'Unauthorized: User not identified' });
+    }
     const user = await User.findById(req.user.id).select('-password');
-    if (!user) return res.status(404).json({ error: 'Not found' });
+    if (!user) return res.status(401).json({ error: 'Unauthorized: User not found' });
     res.json({ user });
   } catch (err) {
+    console.error('Fetch me error:', err.message);
     res.status(500).json({ error: 'Failed to fetch user' });
   }
 };
