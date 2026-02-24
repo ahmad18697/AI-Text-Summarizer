@@ -41,18 +41,9 @@ for (let port = 5173; port <= 5179; port++) {
 app.use(
   cors({
     origin: (origin, callback) => {
-      // Allow requests with no origin (like mobile apps or curl requests)
-      if (!origin) return callback(null, true);
-
-      if (allowedOrigins.has(origin)) {
-        return callback(null, true);
-      }
-
-      // Do not throw Error; sending false correctly blocks via CORS headers without causing a 500 HTTP Server Error.
-      // However, to ensure frontend preview works, let's also allow any origin in dev or if origin matches frontend domains loosely.
-      // E.g. we can just return true for now if we want to allow cross-origin completely, or strictly false.
-      // Let's use strict config with proper rejection:
-      return callback(null, origin); // Reflect origin to allow all. (Or setup specifically)
+      // Reflect the origin exactly so that ALL domains are allowed, AND credentials work.
+      // (Using '*' breaks when credentials: true is set).
+      return callback(null, origin || true);
     },
     credentials: true,
   })
