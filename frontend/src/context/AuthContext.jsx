@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
-import axios from 'axios';
+import api from '../api/axios';
 
 const AuthContext = createContext(null);
 
@@ -9,8 +9,7 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     // attempt session
-    axios
-      .get('/auth/me', { withCredentials: true })
+    api.get('/auth/me')
       .then((res) => setUser(res.data.user))
       .catch(() => setUser(null))
       .finally(() => setLoading(false));
@@ -18,7 +17,7 @@ export function AuthProvider({ children }) {
 
   const logout = async () => {
     try {
-      await axios.post('/auth/logout', {}, { withCredentials: true });
+      await api.post('/auth/logout');
       setUser(null);
     } catch (e) {
       // ignore

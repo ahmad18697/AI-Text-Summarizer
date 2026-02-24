@@ -20,3 +20,18 @@ exports.deleteHistory = async (req, res) => {
     res.status(500).json({ error: 'Failed to delete summary' });
   }
 };
+
+// PATCH: Toggle favorite status
+exports.toggleFavorite = async (req, res) => {
+  try {
+    const summaryItem = await Summary.findOne({ _id: req.params.id, user: req.user.id });
+    if (!summaryItem) return res.status(404).json({ error: 'Summary not found' });
+
+    summaryItem.isFavorite = !summaryItem.isFavorite;
+    await summaryItem.save();
+
+    res.json({ isFavorite: summaryItem.isFavorite, message: 'Favorite status updated' });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to update favorite status' });
+  }
+};

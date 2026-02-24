@@ -61,6 +61,20 @@ exports.google = async (req, res) => {
     let user = await User.findOne({ email });
     if (!user) {
       user = await User.create({ name, email, googleId, avatar: picture });
+    } else {
+      // Update existing user with google info if it was missing
+      let isUpdated = false;
+      if (!user.googleId) {
+        user.googleId = googleId;
+        isUpdated = true;
+      }
+      if (!user.avatar && picture) {
+        user.avatar = picture;
+        isUpdated = true;
+      }
+      if (isUpdated) {
+        await user.save();
+      }
     }
 
     issueToken(res, user);

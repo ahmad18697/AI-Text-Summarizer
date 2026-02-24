@@ -1,150 +1,127 @@
-import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { Sparkles, Zap, FileText, Share2, Shield, ArrowRight } from 'lucide-react';
 
 export default function Home() {
   return (
-    <div className="relative overflow-hidden">
-      {/* Background Orbs */}
-      <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute -top-32 -left-24 h-96 w-96 rounded-full bg-indigo-500/20 blur-3xl" />
-        <div className="absolute -top-24 right-10 h-72 w-72 rounded-full bg-violet-500/25 blur-3xl" />
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 h-80 w-[36rem] rounded-full bg-blue-500/10 blur-3xl" />
+    <div className="relative min-h-[calc(100vh-80px)] overflow-hidden flex flex-col justify-center">
+      {/* Animated Background Orbs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
+        <motion.div
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.5, 0.3],
+          }}
+          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute -top-[20%] -left-[10%] w-[50vw] h-[50vw] rounded-full bg-indigo-500/20 blur-[120px]"
+        />
+        <motion.div
+          animate={{
+            scale: [1, 1.5, 1],
+            opacity: [0.2, 0.4, 0.2],
+          }}
+          transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+          className="absolute top-[20%] -right-[10%] w-[40vw] h-[40vw] rounded-full bg-violet-500/20 blur-[100px]"
+        />
+        <div className="absolute -bottom-[20%] left-[20%] w-[60vw] h-[40vw] rounded-full bg-blue-500/10 blur-[100px]" />
       </div>
 
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10 sm:py-16 lg:py-24">
-        {/* Heading */}
-        <div className="max-w-3xl">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 sm:py-20 lg:py-24 relative z-10 w-full">
+        {/* Hero Content */}
+        <div className="text-center max-w-4xl mx-auto mb-16 sm:mb-24">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: 'easeOut' }}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card mb-8 text-indigo-600 dark:text-indigo-400 text-sm font-semibold shadow-sm"
+          >
+            <Sparkles className="w-4 h-4" />
+            <span>AI-Powered Text Intelligence</span>
+          </motion.div>
+
           <motion.h1
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="text-4xl sm:text-6xl font-extrabold leading-tight tracking-tight bg-gradient-to-r from-indigo-500 via-violet-500 to-blue-400 bg-clip-text text-transparent drop-shadow-sm"
+            transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
+            className="text-5xl sm:text-7xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-6 leading-[1.1]"
           >
-            Summarize Smarter.
-            <br className="hidden sm:block" /> Faster. Beautiful.
+            Summarize Smarter. <br className="hidden sm:block" />
+            <span className="text-gradient animate-gradient">Faster. Beautiful.</span>
           </motion.h1>
+
           <motion.p
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.05 }}
-            className="mt-4 max-w-2xl text-lg sm:text-xl text-black/70"
+            transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
+            className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed"
           >
-            Turn walls of text into clear, concise insights. Choose your style and tone, then save, share, or listen—
-            all in one elegant dashboard.
+            Turn endless walls of text, massive PDFs, and long documents into clear, concise insights in seconds. Choose your style, tone, and language effortlessly.
           </motion.p>
-          <div className="mt-6 flex gap-3">
-            <Link to="/app" className="btn-primary">
-              Get Started
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3, ease: 'easeOut' }}
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+          >
+            <Link to="/app" className="btn-premium px-8 py-4 rounded-xl text-base font-semibold flex items-center gap-2 w-full sm:w-auto justify-center group">
+              Start Summarizing
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
-            <Link to="/history" className="inline-flex items-center justify-center px-4 py-2 rounded-xl text-sm font-semibold text-black glass">
-              View History
+            <Link to="/history" className="px-8 py-4 rounded-xl text-base font-semibold text-slate-700 dark:text-slate-200 glass-card hover:bg-white/50 dark:hover:bg-slate-800/50 transition-colors w-full sm:w-auto text-center border border-slate-200 dark:border-slate-700">
+              View Your History
             </Link>
-          </div>
+          </motion.div>
         </div>
 
-        {/* Center Device Mock */}
-        <div className="mt-10 sm:mt-14 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          <div className="order-2 lg:order-1 lg:col-span-6">
-            <FeatureList />
-          </div>
-          <div className="order-1 lg:order-2 lg:col-span-6">
-            <DeviceMock />
-          </div>
+        {/* Feature Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 px-4">
+          <FeatureCard
+            icon={<Zap />}
+            title="Instant Analysis"
+            desc="Process thousands of words in milliseconds with advanced AI."
+            delay={0.4}
+          />
+          <FeatureCard
+            icon={<FileText />}
+            title="PDF & DOCX Support"
+            desc="Upload massive files natively without worrying about formats."
+            delay={0.5}
+          />
+          <FeatureCard
+            icon={<Share2 />}
+            title="Public Sharing"
+            desc="Generate unique, beautiful links to share insights globally."
+            delay={0.6}
+          />
+          <FeatureCard
+            icon={<Shield />}
+            title="Private & Secure"
+            desc="Your data is encrypted and completely isolated per account."
+            delay={0.7}
+          />
         </div>
       </section>
     </div>
-  )
+  );
 }
 
-function FeatureList() {
-  const items = [
-    { title: 'Brief, Detailed, Bulleted, Creative', emoji: '✨' },
-    { title: 'Tone: Professional, Friendly, Academic, News', emoji: '🎯' },
-    { title: 'Copy, Download, Text‑to‑Speech', emoji: '🎧' },
-    { title: 'History & Shareable Links', emoji: '🔗' },
-  ]
-  return (
-    <ul className="space-y-3">
-      {items.map((it, idx) => (
-        <motion.li
-          key={idx}
-          initial={{ opacity: 0, x: -8 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, amount: 0.4 }}
-          transition={{ duration: 0.35, delay: idx * 0.05 }}
-          className="glass px-4 py-3 flex items-center gap-3"
-        >
-          <span className="text-xl">{it.emoji}</span>
-          <span className="text-sm sm:text-base text-black">{it.title}</span>
-        </motion.li>
-      ))}
-    </ul>
-  )
-}
-
-function DeviceMock() {
+function FeatureCard({ icon, title, desc, delay }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 12 }}
+      initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.4 }}
-      transition={{ duration: 0.45 }}
-      className="relative mx-auto w-full max-w-md"
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.5, delay }}
+      className="glass-card p-6 rounded-2xl group hover:-translate-y-2 transition-transform duration-300"
     >
-      <div className="rounded-[2.2rem] border border-black/10 dark:border-white/10 shadow-glow bg-white/80 dark:bg-slate-900/60 backdrop-blur-md overflow-hidden">
-        <div className="h-10 bg-gradient-to-r from-indigo-600 to-violet-600" />
-        <div className="p-4">
-          <div className="flex items-center gap-2 mb-3">
-            <div className="h-8 w-8 rounded-full bg-indigo-500 text-white grid place-items-center text-sm font-semibold">A</div>
-            <div className="text-sm text-black">AI Summarizer</div>
-          </div>
-          <div className="space-y-2">
-            <Bubble side="left" text="Paste your text and choose a mode." />
-            <Bubble side="right" text="Mode: Brief • Tone: Professional" accent />
-            <Bubble side="left" text="Generating summary…" typing />
-          </div>
+      <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-500/10 to-violet-500/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+        <div className="text-indigo-600 dark:text-indigo-400">
+          {icon}
         </div>
       </div>
-      {/* Floating avatars */}
-      <motion.div className="absolute -left-10 -top-6" animate={{ y: [0, -6, 0] }} transition={{ repeat: Infinity, duration: 6 }}>
-        <Avatar color="bg-amber-400" label="😊" />
-      </motion.div>
-      <motion.div className="absolute -right-10 top-10" animate={{ y: [0, 8, 0] }} transition={{ repeat: Infinity, duration: 7 }}>
-        <Avatar color="bg-rose-400" label="🎤" />
-      </motion.div>
-      <motion.div className="absolute left-1/2 -bottom-6 -translate-x-1/2" animate={{ y: [0, -5, 0] }} transition={{ repeat: Infinity, duration: 5.5 }}>
-        <Avatar color="bg-emerald-400" label="👍" />
-      </motion.div>
+      <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">{title}</h3>
+      <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">{desc}</p>
     </motion.div>
-  )
-}
-
-function Bubble({ side = 'left', text, accent, typing }) {
-  return (
-    <div className={`max-w-[85%] ${side === 'right' ? 'ml-auto' : ''}`}>
-      <div className={`px-3 py-2 rounded-2xl text-sm shadow-lg ${
-        accent
-          ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white'
-          : 'glass text-black'
-      }`}>
-        {typing ? (
-          <span className="inline-flex items-center gap-1">
-            <span className="h-1.5 w-1.5 rounded-full bg-current animate-bounce" />
-            <span className="h-1.5 w-1.5 rounded-full bg-current animate-bounce [animation-delay:120ms]" />
-            <span className="h-1.5 w-1.5 rounded-full bg-current animate-bounce [animation-delay:240ms]" />
-          </span>
-        ) : (
-          text
-        )}
-      </div>
-    </div>
-  )
-}
-
-function Avatar({ color = 'bg-indigo-400', label = '🙂' }) {
-  return (
-    <div className={`h-12 w-12 rounded-full grid place-items-center shadow-glow ${color} text-white text-lg`}>
-      {label}
-    </div>
-  )
+  );
 }

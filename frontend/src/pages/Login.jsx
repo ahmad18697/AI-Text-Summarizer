@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import axios from 'axios';
+import api from '../api/axios';
 import { Box, Button, Card, CardContent, TextField, Typography, CircularProgress } from '@mui/material';
 
 export default function Login() {
@@ -15,7 +15,7 @@ export default function Login() {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await axios.post('/auth/login', { email, password }, { withCredentials: true });
+      const res = await api.post('/auth/login', { email, password });
       setUser(res.data.user);
       navigate('/');
     } catch (err) {
@@ -27,7 +27,7 @@ export default function Login() {
 
   const handleGoogleResponse = async (response) => {
     try {
-      const res = await axios.post('/auth/google', { id_token: response.credential }, { withCredentials: true });
+      const res = await api.post('/auth/google', { id_token: response.credential });
       setUser(res.data.user);
       navigate('/');
     } catch (e) {
@@ -77,23 +77,23 @@ export default function Login() {
     <Box sx={{ position: 'relative', minHeight: '100vh', width: '100%' }}>
       <Box sx={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundImage: `url(${import.meta.env.BASE_URL}auth-bg.png)`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', zIndex: 0 }} />
       <Box sx={{ position: 'relative', zIndex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', width: '100%' }}>
-      <Card sx={{ width: 380, borderRadius: 3, bgcolor: '#ffffff', border: '1px solid rgba(0,0,0,0.06)', boxShadow: '0 10px 30px rgba(79,70,229,0.12)' }}>
-        <CardContent>
-          <Typography variant="h5" sx={{ color: '#111827', mb: 2, fontWeight: 700 }}>Welcome back</Typography>
-          <Typography variant="body2" sx={{ color: '#374151', mb: 3 }}>Sign in to continue</Typography>
-          <form onSubmit={handleSubmit}>
-            <TextField fullWidth label="Email" type="email" value={email} onChange={(e)=>setEmail(e.target.value)} sx={{ mb: 2 }} />
-            <TextField fullWidth label="Password" type="password" value={password} onChange={(e)=>setPassword(e.target.value)} sx={{ mb: 2 }} />
-            <Button fullWidth type="submit" variant="contained" disabled={loading} sx={{ py: 1.2, borderRadius: 2, backgroundColor: '#4f46e5' }}>
-              {loading ? <CircularProgress size={20} sx={{ color: 'white' }} /> : 'Sign In'}
-            </Button>
-          </form>
-          <Box id="googleSignInDiv" style={{ marginTop: 16, display: 'flex', justifyContent: 'center' }} />
-          <Typography variant="body2" sx={{ mt: 2, color: '#374151' }}>
-            Don't have an account? <Link to="/register">Create one</Link>
-          </Typography>
-        </CardContent>
-      </Card>
+        <Card sx={{ width: 380, borderRadius: 3, bgcolor: '#ffffff', border: '1px solid rgba(0,0,0,0.06)', boxShadow: '0 10px 30px rgba(79,70,229,0.12)' }}>
+          <CardContent>
+            <Typography variant="h5" sx={{ color: '#111827', mb: 2, fontWeight: 700 }}>Welcome back</Typography>
+            <Typography variant="body2" sx={{ color: '#374151', mb: 3 }}>Sign in to continue</Typography>
+            <form onSubmit={handleSubmit}>
+              <TextField fullWidth label="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} sx={{ mb: 2 }} />
+              <TextField fullWidth label="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} sx={{ mb: 2 }} />
+              <Button fullWidth type="submit" variant="contained" disabled={loading} sx={{ py: 1.2, borderRadius: 2, backgroundColor: '#4f46e5' }}>
+                {loading ? <CircularProgress size={20} sx={{ color: 'white' }} /> : 'Sign In'}
+              </Button>
+            </form>
+            <Box id="googleSignInDiv" style={{ marginTop: 16, display: 'flex', justifyContent: 'center' }} />
+            <Typography variant="body2" sx={{ mt: 2, color: '#374151' }}>
+              Don't have an account? <Link to="/register">Create one</Link>
+            </Typography>
+          </CardContent>
+        </Card>
       </Box>
     </Box>
   );

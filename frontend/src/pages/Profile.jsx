@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Box, Card, CardContent, Typography, Avatar, Stack, Divider, Button } from '@mui/material'
-import axios from 'axios'
+import api from '../api/axios'
 import { useAuth } from '../context/AuthContext'
 
 export default function Profile() {
@@ -12,9 +12,9 @@ export default function Profile() {
     let mounted = true
     if (!user) {
       setLoading(true)
-      axios.get('/auth/me', { withCredentials: true })
+      api.get('/auth/me')
         .then(res => { if (mounted) setMe(res.data.user) })
-        .catch(() => {})
+        .catch(() => { })
         .finally(() => mounted && setLoading(false))
     }
     return () => { mounted = false }
